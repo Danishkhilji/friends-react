@@ -35,7 +35,7 @@ function SettingForm() {
 
     const CurrentUser= currentUser.currentUser.uid;
    
-    console.log(CurrentUser)
+    console.log(currentUser)
 
      const formHandler = async (e) => {
       
