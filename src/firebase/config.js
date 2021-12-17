@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
-import {getFirestore ,setDoc,doc} from 'firebase/firestore'
-import { signOut ,getAuth, onAuthStateChanged ,createUserWithEmailAndPassword ,signInWithEmailAndPassword} from "firebase/auth";
-import { getStorage } from "firebase/storage";
+import {getFirestore ,setDoc,doc,updateDoc} from 'firebase/firestore'
+import {signOut ,getAuth, onAuthStateChanged ,createUserWithEmailAndPassword ,signInWithEmailAndPassword} from "firebase/auth";
+import {getDownloadURL, getStorage,ref,uploadBytesResumable } from "firebase/storage";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyCF69sy-Hz3jfFlkQKZp-zF08n5BQ_CSP4",
@@ -21,4 +21,4 @@ const firebaseConfig = {
   const signIn= signInWithEmailAndPassword
   const storage =getStorage(app)
   const logOut=signOut
-  export {firebaseConfig,auth,db,storage,stateChange,newUser ,setDoc,doc,signIn,logOut}  
+  export {firebaseConfig,auth,db,storage,stateChange,newUser,updateDoc ,setDoc,doc,signIn,logOut,getDownloadURL,ref,uploadBytesResumable}  

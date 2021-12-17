@@ -1,20 +1,25 @@
+import AuthProvider from "./Auth";
+import {PublicRoute,PrivateRoute} from "./RouteAuth"
 import { Routes,Route } from "react-router-dom";
 import Login from '../pages/login/login';
 import Signup from '../pages/signup/signup';
 import Home from "../pages/home";
-import AuthProvider from "./Auth";
-import {PublicRoute,PrivateRoute} from "./RouteAuth"
+import Setting from "../pages/setting/setting";
+import Profile from "../pages/profile/profile";
+
 
 function MyAppRouter() {
   return (
     <div className="App">
       <AuthProvider>
       <Routes>
-          <Route exact path='/home' element={<PrivateRoute/>}>
+          <Route exact  element={<PrivateRoute/>}>
             <Route exact path='/home' element={<Home/>}/>
+            <Route exact path='/setting' element={<Setting/>}/>
+            <Route exact path='/profile' element={<Profile/>}/>
           </Route>       
 
-          <Route  exact path='' element={<PublicRoute/>}>
+          <Route  exact  element={<PublicRoute/>}>
                 <Route path="/login" element={<Login />}/> 
                 <Route path="/signup" element={<Signup />} />
             </Route>       
