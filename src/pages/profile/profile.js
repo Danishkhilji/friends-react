@@ -1,11 +1,11 @@
 import React from 'react'
-import { Card } from 'antd';
+import { Row,Col,Card } from 'antd';
 import ProfileCard from './ProfileCard/card';
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase/config"
 import { useContext,useState } from 'react';
 import {AuthContext} from "../../routes/Auth"
-
+import PostForm from './postForm/PostFrom';
 
 const { Meta } = Card;
 const Profile = () => {
@@ -26,7 +26,15 @@ const unsub = onSnapshot(doc(db, "usersData", User.currentUser.uid), (doc) => {
 
     return (
         <div>
-                  <ProfileCard image={imageUrl}  UserName={userName} Bio={userBio} ></ProfileCard>
+                  <Row type="flex" justify="center"  style={{minHeight: '100vh'}}>
+                    <Col offset={18} >
+                      <ProfileCard image={imageUrl}  UserName={userName} Bio={userBio} ></ProfileCard>
+                      <hr/>
+                      <h2> Post here</h2>
+                      <PostForm/>
+                    </Col>
+                 
+                  </Row>
         </div>
     )
 }

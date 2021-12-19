@@ -1,7 +1,10 @@
-import { storage ,db,updateDoc,doc,getDownloadURL,ref,uploadBytesResumable,auth} from '../../../firebase/config';
-import { Form, Input, Button,Col,Row } from 'antd';
-import { useContext,useRef, useState } from "react"; 
+import { storage ,db,setDoc,doc,getDownloadURL,ref,uploadBytesResumable,auth} from '../../../firebase/config';
+import { Form, Input, Button,Switch, Col} from 'antd';
+import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
+
+import { useContext,useEffect,useRef, useState } from "react"; 
 import { AuthContext } from '../../../routes/Auth';
+const { TextArea } = Input;
 
 const formItemLayout = {
   labelCol: {
@@ -23,15 +26,14 @@ const formTailLayout = {
 
 
 
-function SettingForm() {
+function PostForm() {
   
   const currentUser = useContext(AuthContext)
-  const Name = useRef(null);
-    const bio = useRef(null);
+
+    const postText = useRef(null);
     const [selectedFile, setSelectedFile] = useState(null);
     const [progress,setProgress]=useState(0);
-    const [imageUrl,setImageUrl]=useState();
-    // const [CurrentUser,setCurrentUser]=useState('');
+    const [IsPublic,setIsPublic]=useState(true)
 
     const CurrentUser= currentUser.currentUser.uid;
    
@@ -45,7 +47,7 @@ function SettingForm() {
 
       const uploadFiles = (file) => {
         if (!file) return;
-        const sotrageRef = ref(storage, `files/${file.name}`);
+        const sotrageRef = ref(storage, `post/${file.name}`);
         const uploadTask = uploadBytesResumable(sotrageRef, file);
           uploadTask.on(
                 "state_changed",
@@ -58,60 +60,49 @@ function SettingForm() {
                 (error) => console.log(error),
                 () => {
                   getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    setImageUrl(downloadURL);
-                    console.log("File available at", downloadURL);
-                    const userName = (Name.current.input.value);
-                    const userBio = (bio.current.input.value);            
-                    const profileData = {
-                      name: userName,
-                      bio: userBio,
-                      imageUrl:downloadURL
-                    };
-                    updateDoc(doc(db, "usersData", CurrentUser),profileData);
 
-                    
+                    const textPost = (postText.current.resizableTextArea.textArea.value);
+           
+                    const postData = {
+                     postText: textPost,
+                      imageUrl:downloadURL,
+                      ispublic:IsPublic
+                    };
+                    setDoc(doc(db, "postData", CurrentUser),postData);
                     // profileUpload();
                   });
                 }
               );
 
         }; 
+        function switchHandler(checked) {
+            console.log(`${checked}`);
+            setIsPublic(checked)
+
+          }
+
       
   return (
     <div >
-        <Row type="flex" justify="center" align="middle" style={{minHeight: '100vh'}}>
-<Col  >
-    <Form onFinish={formHandler} >
-   
 
+    <Form onFinish={formHandler} >
+         
+      <Switch checkedChildren="Public" unCheckedChildren="Private" defaultChecked onChange={switchHandler} />  
      <Form.Item
         {...formItemLayout}
         name="image"
-        label="Profile Picture"
+       
       >
             
             <input type="file" className="input" onChange={(e)=>{
       setSelectedFile(e.target.files[0]);
     }} />
       </Form.Item> 
-      <Form.Item
-        {...formItemLayout}
-        name="username"
-        label="Name"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your name',
-          },
-        ]}
-      >
-        <Input placeholder="Please input your name" ref={ Name } />
-      </Form.Item>
       
       <Form.Item
         {...formItemLayout}
         name="bio"
-        label="bio"
+    
         rules={[
           {
             required: true,
@@ -119,22 +110,21 @@ function SettingForm() {
           },
         ]}
       >
-        <Input placeholder="Write somting about you"  ref={bio}/>
+          <TextArea rows={2} ref={postText} />
       </Form.Item>
-      
+     
+
       <Form.Item {...formTailLayout}>
         <Button type="primary" htmlType="submit">
-          Save Details
+          Post
         </Button>
       </Form.Item>
     </Form>
     <hr />
-      <h2>Uploading done {progress}%</h2>
-    </Col>
-    </Row>
- 
+      <h3>Posting done {progress}%</h3>
+
     </div>
   );
 }
 
-export default SettingForm;
+export default PostForm;
