@@ -1,4 +1,4 @@
-import { storage ,db,setDoc,doc,getDownloadURL,ref,uploadBytesResumable,auth} from '../../../firebase/config';
+import { storage ,db,setDoc,addDoc,collection,doc,getDownloadURL,ref,uploadBytesResumable,auth} from '../../../firebase/config';
 import { Form, Input, Button,Switch, Col} from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 
@@ -37,7 +37,7 @@ function PostForm() {
 
     const CurrentUser= currentUser.currentUser.uid;
    
-    console.log(currentUser)
+    console.log(CurrentUser)
 
      const formHandler = async (e) => {
       
@@ -66,10 +66,11 @@ function PostForm() {
                     const postData = {
                      postText: textPost,
                       imageUrl:downloadURL,
-                      ispublic:IsPublic
+                      ispublic:IsPublic,
+                      userId:CurrentUser
                     };
-                    setDoc(doc(db, "postData", CurrentUser),postData);
-                    // profileUpload();
+                    addDoc(collection(db, "postData"),postData);
+                    
                   });
                 }
               );
