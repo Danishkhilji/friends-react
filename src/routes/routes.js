@@ -6,6 +6,7 @@ import Signup from '../pages/signup/signup';
 import Home from "../pages/home";
 import Setting from "../pages/setting/setting";
 import Profile from "../pages/profile/profile";
+import PostDisplay from "../pages/profile/PostCard/postDisplay";
 
 
 function MyAppRouter() {
@@ -17,6 +18,7 @@ function MyAppRouter() {
             <Route exact path='/home' element={<Home/>}/>
             <Route exact path='/setting' element={<Setting/>}/>
             <Route exact path='/profile' element={<Profile/>}/>
+            <Route exact path='/post' element={<PostDisplay/>}/>
           </Route>       
 
           <Route  exact  element={<PublicRoute/>}>

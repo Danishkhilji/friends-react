@@ -2,9 +2,6 @@ import React from 'react'
 import { Card } from 'antd';
 const { Meta } = Card;
 const PostCard = (props) => {
-
-    console.log(props.image);
-
     return (
         <div>
         
