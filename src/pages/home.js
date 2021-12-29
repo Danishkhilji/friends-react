@@ -3,7 +3,8 @@ import { Upload } from 'antd';
 import { storage,logOut ,auth} from '../firebase/config';
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { useNavigate } from 'react-router-dom';
-
+import Topbar from '../components/navBar/nav';
+import PostDisplay from './profile/PostCard/postDisplay';
 function Home() {
     const navigate=useNavigate();
     
@@ -47,14 +48,8 @@ function Home() {
 
   return (
     <div className="App">
-hello danish
-
-      <form onSubmit={formHandler}>
-        <input type="file" className="input" />
-        <button type="submit">Upload</button>
-      </form>
-      <button type="submit" onClick={logOutHandler}>Logout</button>
-
+<Topbar></Topbar>
+<PostDisplay></PostDisplay>
     </div>
   );
 }

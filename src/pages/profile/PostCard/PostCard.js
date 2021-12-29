@@ -5,7 +5,7 @@ const PostCard = (props) => {
     return (
         <div>
         
-                <h1>All Post</h1>    
+                    
                     <Card
                         hoverable
                         style={{ width: 240 }}

@@ -6,6 +6,7 @@ import { db } from "../../firebase/config"
 import { useContext,useState } from 'react';
 import {AuthContext} from "../../routes/Auth"
 import PostForm from './postForm/PostFrom';
+import Topbar from '../../components/navBar/nav';
 
 const { Meta } = Card;
 const Profile = () => {
@@ -25,12 +26,13 @@ const user = onSnapshot(doc(db, "usersData", User.currentUser.uid), (doc) => {
 
     return (
         <div>
+<Topbar></Topbar>
                   <Row type="flex" justify="center"  style={{minHeight: '100vh'}}>
                     <Col offset={18} >
                       <ProfileCard image={imageUrl}  UserName={userName} Bio={userBio} ></ProfileCard>
                       <hr/>
                       <h2> Post here</h2>
-                      <PostForm/>
+                      <PostForm />
                     </Col>
 
 

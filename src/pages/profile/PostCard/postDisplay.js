@@ -26,9 +26,11 @@ const User = useContext(AuthContext);
       console.log("Current post: ", AllPost);
 return(
 <div>
+<h1>All post </h1>
 {AllPost.map((elem)=>{
-return (
+return ( 
         <PostCard image={elem.imageUrl} Details={elem.postText}></PostCard>
+     
 )
 
 })}
